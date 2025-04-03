@@ -1,0 +1,17 @@
+.userMessage {
+  align-self: flex-end;
+  padding: 12px 16px;
+  background-color: #e8e8e8;
+  border-radius: 16px;
+  margin: 8px 16px;
+  color: #333;
+  font-size: 14px;
+  line-height: 1.4;
+  font-family: var(--font-hanken-grotesk);
+  max-width: 260px;
+  text-align: left;
+}
+
+.userMessage span {
+  color: #333;
+}

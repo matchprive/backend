@@ -1,0 +1,13 @@
+.sendButtonIcon {
+  height: 31.2px;
+  width: 31.2px;
+  position: relative;
+  object-fit: cover;
+}
+.sendButton {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}

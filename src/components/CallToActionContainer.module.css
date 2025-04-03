@@ -1,0 +1,59 @@
+.nothingToLose {
+  margin: 0;
+  color: var(--text-dark);
+}
+.nothingToLoseContainer {
+  align-self: stretch;
+  position: relative;
+  letter-spacing: 8.1px;
+  text-transform: uppercase;
+  color: var(--text-dark);
+}
+.startNow {
+  position: relative;
+  font-size: var(--font-size-3xl-6);
+  font-family: var(--font-hanken-grotesk);
+  color: var(--text);
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 0.21em;
+  text-transform: uppercase;
+}
+.ctaButton {
+  cursor: pointer;
+  border: none;
+  padding: var(--padding-3xl-6) var(--padding-51xl);
+  background-color: var(--text-dark);
+  border-radius: var(--br-lgi-8);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-content: center;
+  transition: background-color 0.3s ease;
+}
+.ctaButton:hover {
+  background-color: #333333;
+}
+.callToActionContainer1 {
+  align-self: stretch;
+  position: relative;
+  font-family: var(--font-hanken-grotesk);
+  color: var(--text-dark);
+  font-size: var(--font-size-xl);
+}
+.callToActionContainer {
+  align-self: stretch;
+  background-color: var(--color-gainsboro-100);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-17xl) var(--padding-base);
+  gap: var(--gap-21xl);
+  text-align: center;
+  font-size: var(--font-size-xl);
+  color: var(--text-dark);
+  font-family: var(--font-playfair-display-sc);
+}

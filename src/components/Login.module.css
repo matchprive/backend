@@ -1,0 +1,118 @@
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 20px;
+}
+
+.loginBox {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.loginBox h2 {
+  margin: 0 0 24px;
+  color: #2a2a2a;
+  font-size: 24px;
+  text-align: center;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputGroup label {
+  color: #4a4a4a;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.inputGroup input {
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.2s;
+  font-family: var(--font-hanken-grotesk);
+}
+
+.inputGroup input:focus {
+  outline: none;
+  border-color: var(--text);
+}
+
+.error {
+  color: #dc3545;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 8px;
+  font-family: var(--font-hanken-grotesk);
+}
+
+.submitButton {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.submitButton:hover {
+  background: #0056b3;
+}
+
+.submitButton:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.switchButton {
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 8px;
+  margin-top: 16px;
+  width: 100%;
+  font-family: var(--font-hanken-grotesk);
+}
+
+.switchButton:hover {
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 750px) {
+  .loginBox {
+    padding: 30px 20px;
+    margin: 0 20px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .loginBox {
+    padding: 20px 15px;
+  }
+} 
