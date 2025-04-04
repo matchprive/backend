@@ -53,13 +53,13 @@ export const invalidateSession = async (token: string): Promise<void> => {
     );
 };
 
-const generateToken = (userId: string): string => {
+export const generateToken = (userId: string): string => {
     return jwt.sign({ userId }, process.env.JWT_SECRET || 'your-secret-key', {
         expiresIn: '24h',
     });
 };
 
-const verifyToken = (token: string): { userId: string } | null => {
+export const verifyToken = (token: string): { userId: string } | null => {
     try {
         return jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as { userId: string };
     } catch (error) {

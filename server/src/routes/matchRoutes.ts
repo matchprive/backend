@@ -112,7 +112,7 @@ router.get('/profile/:userId/report', validateSession, async (req, res) => {
   }
 });
 
-router.post('/calculate-score', async (req, res) => {
+router.post('/calculate-score', async (req: Request, res: Response) => {
     try {
         const { userId, profile } = req.body;
         
