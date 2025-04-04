@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSession } from '../contexts/SessionContext';
 import matchPriveAPI from '../services/api';
-import styles from './Chatbot.module.css';
+import styles from './CHATBOT.module.css';
 import { ChatMessage } from '../utils/sessionManagement';
 
 export function Chatbot() {
@@ -63,27 +63,27 @@ export function Chatbot() {
 
   return (
     <div className={styles.chatbot}>
-        <div className={styles.header}>
-          <div className={styles.title}>
-          <div className={styles.connectionChat}>MatchPrivé Chat</div>
+      <div className={styles.header}>
+        <div className={styles.title}>
+          <div className={styles.connectionChat}>MatchPrive Chat</div>
           <div className={styles.poweredByLarkBerry}>Powered by GPT</div>
         </div>
       </div>
       <div className={styles.messages}>
-          {messages.map((msg, index) => (
+        {messages.map((msg, index) => (
           <div key={index} className={`${styles.message} ${styles[msg.role]}`}>
             {msg.content}
-            </div>
-          ))}
-          {isLoading && (
+          </div>
+        ))}
+        {isLoading && (
           <div className={`${styles.message} ${styles.assistant}`}>
             <div className={styles.typing}>...</div>
-            </div>
-          )}
-        </div>
+          </div>
+        )}
+      </div>
       <form onSubmit={handleSubmit} className={styles.inputForm}>
-          <input
-            type="text"
+        <input
+          type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type your message..."
@@ -91,8 +91,8 @@ export function Chatbot() {
         />
         <button type="submit" disabled={isLoading}>
           Send
-          </button>
-        </form>
+        </button>
+      </form>
       {error && <div className={styles.error}>{error}</div>}
     </div>
   );

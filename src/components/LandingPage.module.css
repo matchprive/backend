@@ -1,0 +1,394 @@
+.landingPage {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+  font-family: var(--font-hanken-grotesk);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px;
+  background-color: var(--bg);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 80px;
+  position: relative;
+  z-index: 10;
+}
+
+.logo {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text);
+  font-family: var(--font-playfair-display-sc);
+}
+
+.tagline {
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--text);
+  opacity: 0.8;
+  letter-spacing: 0.05em;
+}
+
+.loginButton {
+  background: none;
+  border: 2px solid var(--text);
+  color: var(--text);
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--font-hanken-grotesk);
+}
+
+.loginButton:hover {
+  background: var(--text);
+  color: white;
+}
+
+.hero {
+  position: relative;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px;
+  background-image: url("/hero-banner@3x.png");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  margin-top: -20px;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+  z-index: 1;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  width: 100%;
+  gap: 40px;
+}
+
+.heroLeft {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  padding: 40px;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  transform: translateY(-20px);
+}
+
+.heroText {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: center;
+  font-family: var(--font-playfair-display-sc);
+}
+
+.heroRight {
+  flex: 1;
+  max-width: 600px;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.stepNumber {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+  font-family: var(--font-playfair-display-sc);
+}
+
+.stepTitle {
+  font-size: 28px;
+  font-weight: 700;
+  font-family: var(--font-playfair-display-sc);
+}
+
+.stepDescription {
+  margin-left: 65px;
+  font-size: 18px;
+  opacity: 0.9;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.whySection {
+  padding: 100px 20px;
+  text-align: center;
+  background-color: var(--bg);
+}
+
+.whyTitle {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+  font-family: var(--font-playfair-display-sc);
+}
+
+.whyDescription {
+  font-size: 18px;
+  color: var(--text-dark);
+  max-width: 800px;
+  margin: 0 auto;
+  opacity: 0.8;
+  line-height: 1.6;
+}
+
+.ctaSection {
+  padding: 100px 20px;
+  text-align: center;
+  background-color: var(--bg-dark);
+}
+
+.ctaTitle {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 30px;
+  font-family: var(--font-playfair-display-sc);
+}
+
+.ctaButton {
+  background-color: var(--text-dark);
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ctaButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.footer {
+  background-color: var(--color-gainsboro-200);
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.footerContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 40px;
+}
+
+.footerLink {
+  color: var(--text-dark);
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+  text-decoration: none;
+}
+
+.footerLink:hover {
+  opacity: 1;
+}
+
+.copyright {
+  font-size: 14px;
+  color: var(--text-dark);
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 1200px) {
+  .heroContent {
+    padding: 0 40px;
+  }
+  
+  .whySection, .ctaSection {
+    padding: 80px 40px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    height: 60px;
+    padding: 0 20px;
+  }
+  
+  .logo {
+    font-size: 24px;
+  }
+  
+  .tagline {
+    font-size: 14px;
+  }
+  
+  .hero {
+    min-height: 500px;
+    padding: 40px 20px;
+  }
+  
+  .heroContent {
+    flex-direction: column;
+    gap: 40px;
+    padding: 0;
+  }
+  
+  .heroLeft {
+    min-height: 150px;
+    padding: 30px;
+    transform: translateY(0);
+  }
+  
+  .heroText {
+    font-size: 20px;
+  }
+  
+  .stepTitle {
+    font-size: 20px;
+  }
+  
+  .stepDescription {
+    font-size: 16px;
+    margin-left: 65px;
+  }
+  
+  .whySection, .ctaSection {
+    padding: 60px 20px;
+  }
+  
+  .whyTitle, .ctaTitle {
+    font-size: 28px;
+  }
+  
+  .whyDescription {
+    font-size: 16px;
+  }
+  
+  .ctaButton {
+    font-size: 16px;
+    padding: 14px 28px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header {
+    height: 50px;
+  }
+  
+  .logo {
+    font-size: 20px;
+  }
+  
+  .tagline {
+    font-size: 12px;
+  }
+  
+  .loginButton {
+    padding: 6px 16px;
+    font-size: 14px;
+  }
+  
+  .hero {
+    min-height: 400px;
+    padding: 30px 15px;
+  }
+  
+  .heroLeft {
+    min-height: 120px;
+    padding: 20px;
+  }
+  
+  .heroText {
+    font-size: 18px;
+  }
+  
+  .stepNumber {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+  
+  .stepTitle {
+    font-size: 18px;
+  }
+  
+  .stepDescription {
+    margin-left: 55px;
+    font-size: 14px;
+  }
+  
+  .whySection, .ctaSection {
+    padding: 40px 15px;
+  }
+  
+  .whyTitle, .ctaTitle {
+    font-size: 24px;
+  }
+  
+  .whyDescription {
+    font-size: 14px;
+  }
+  
+  .ctaButton {
+    font-size: 14px;
+    padding: 12px 24px;
+  }
+  
+  .footerLinks {
+    flex-direction: column;
+    gap: 15px;
+  }
+} 
