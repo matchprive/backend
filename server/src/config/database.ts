@@ -27,4 +27,12 @@ export const initializeDatabase = async () => {
         console.error('Error during database initialization:', error);
         throw error;
     }
+};
+
+// Raw SQL query function
+export const query = async (sql: string, params?: any[]) => {
+    if (!AppDataSource.isInitialized) {
+        await initializeDatabase();
+    }
+    return AppDataSource.query(sql, params);
 }; 
