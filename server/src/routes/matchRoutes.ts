@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { getSession } from '../utils/sessionManagement';
+import { getSession, validateSession } from '../utils/sessionManagement';
 import { 
   hasDealbreakerConflict, 
   matchingFunctions, 
@@ -7,9 +7,9 @@ import {
   calculateFinalScore 
 } from '../utils/matchingAlgorithm';
 import { Router } from 'express';
-import { validateSession } from '../utils/sessionManagement';
 import { User } from '../entities/User';
 import { AppDataSource } from '../config/database';
+import { UserProfile } from '../types';
 
 const router = express.Router();
 const userRepository = AppDataSource.getRepository(User);
@@ -34,11 +34,11 @@ router.get('/', async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'One or both users not found' });
     }
 
-    const user1Profile = user1Session.profile;
-    const user2Profile = user2Session.profile;
+    const user1Profile = user1Session.profile as UserProfile;
+    const user2Profile = user2Session.profile as UserProfile;
 
     // Check for dealbreaker conflicts
-    const hasConflict = hasDealbreakerConflict(user1Profile, user2Profile);
+    const hasConflict = hasDealbreakerConflict({ profile: user1Profile }, { profile: user2Profile });
     if (hasConflict) {
       return res.json({
         compatible: false,
@@ -50,14 +50,14 @@ router.get('/', async (req: Request, res: Response) => {
     // Calculate trait compatibility scores
     const traitScores: Record<string, number> = {};
     for (const [trait, matchingFunction] of Object.entries(matchingFunctions)) {
-      traitScores[trait] = matchingFunction(user1Profile, user2Profile);
+      traitScores[trait] = matchingFunction({ profile: user1Profile }, { profile: user2Profile });
     }
 
     // Calculate archetype compatibility
-    const archetypeScore = calculateArchetypeScore(user1Profile, user2Profile);
+    const archetypeScore = calculateArchetypeScore({ profile: user1Profile }, { profile: user2Profile });
 
     // Calculate final compatibility score
-    const finalScore = calculateFinalScore(traitScores, archetypeScore);
+    const finalScore = calculateFinalScore({ profile: user1Profile }, { profile: user2Profile });
 
     return res.json({
       compatible: true,
@@ -85,7 +85,10 @@ router.get('/profile/:userId/report', validateSession, async (req, res) => {
     }
 
     // Calculate compatibility score
-    const score = calculateFinalScore({ profile: targetUser.profile as any });
+    const score = calculateFinalScore(
+      { profile: targetUser.profile as UserProfile },
+      { profile: currentUser.profile as UserProfile }
+    );
 
     res.json({
       score,
