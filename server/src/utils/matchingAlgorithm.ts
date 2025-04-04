@@ -105,4 +105,12 @@ export function hasDealbreakerConflict(user1: { profile: UserProfile }, user2: {
   }
   
   return false;
+}
+
+export function calculateTraitScore(user1: { profile: UserProfile }, user2: { profile: UserProfile }): number {
+    return matchingFunctions.traits(user1, user2);
+}
+
+export function calculateGoalScore(user1: { profile: UserProfile }, user2: { profile: UserProfile }): number {
+    return matchingFunctions.goals(user1, user2);
 } 

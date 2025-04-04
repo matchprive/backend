@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { User } from '../entities/User';
 import { AppDataSource } from '../config/database';
 import { UserProfile } from '../types';
+import { query } from '../config/database';
 
 const userRepository = AppDataSource.getRepository(User);
 
@@ -19,35 +20,52 @@ export const getSession = (sessionId: string): Session | null => {
     return sessions.get(sessionId) || null;
 };
 
-export const createSession = (user: User): string => {
-    const token = jwt.sign(
-        { userId: user.id },
-        process.env.JWT_SECRET || 'your-secret-key',
-        { expiresIn: '24h' }
+export async function createSession(userId: number): Promise<string> {
+    const token = generateToken(userId.toString());
+    const expiresAt = new Date();
+    expiresAt.setHours(expiresAt.getHours() + 24); // 24 hours from now
+
+    await query(
+        'INSERT INTO sessions (user_id, token, expires_at) VALUES ($1, $2, $3)',
+        [userId, token, expiresAt]
     );
+
     return token;
-};
+}
 
-export const validateSession = async (req: Request, res: Response, next: NextFunction) => {
+export async function validateSession(token: string): Promise<number | null> {
+    const decoded = verifyToken(token);
+    if (!decoded) return null;
+
+    const result = await query(
+        'SELECT user_id FROM sessions WHERE token = $1 AND expires_at > NOW()',
+        [token]
+    );
+
+    if (result.rows.length === 0) return null;
+    return result.rows[0].user_id;
+}
+
+export async function invalidateSession(token: string): Promise<void> {
+    await query(
+        'DELETE FROM sessions WHERE token = $1',
+        [token]
+    );
+}
+
+function generateToken(userId: string): string {
+    return jwt.sign({ userId }, process.env.JWT_SECRET || 'your-secret-key', {
+        expiresIn: '24h',
+    });
+}
+
+function verifyToken(token: string): { userId: string } | null {
     try {
-        const token = req.headers.authorization?.split(' ')[1];
-        if (!token) {
-            return res.status(401).json({ error: 'No token provided' });
-        }
-
-        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as { userId: string };
-        const user = await userRepository.findOne({ where: { id: decoded.userId } });
-
-        if (!user) {
-            return res.status(401).json({ error: 'Invalid token' });
-        }
-
-        req.user = user;
-        next();
+        return jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as { userId: string };
     } catch (error) {
-        return res.status(401).json({ error: 'Invalid token' });
+        return null;
     }
-};
+}
 
 export const updateSessionProfile = (sessionId: string, profile: Partial<UserProfile>): boolean => {
     const session = sessions.get(sessionId);

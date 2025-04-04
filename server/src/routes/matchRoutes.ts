@@ -4,7 +4,9 @@ import {
   hasDealbreakerConflict, 
   matchingFunctions, 
   calculateArchetypeScore, 
-  calculateFinalScore 
+  calculateFinalScore,
+  calculateTraitScore,
+  calculateGoalScore
 } from '../utils/matchingAlgorithm';
 import { Router } from 'express';
 import { User } from '../entities/User';
@@ -108,6 +110,61 @@ router.get('/profile/:userId/report', validateSession, async (req, res) => {
     console.error('Error generating compatibility report:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
+});
+
+router.post('/calculate-score', async (req, res) => {
+    try {
+        const { userId, profile } = req.body;
+        
+        if (!userId || !profile) {
+            return res.status(400).json({ error: 'Missing required fields' });
+        }
+
+        // Create a mock user2 profile for comparison
+        const mockUser2 = {
+            profile: {
+                name: 'Mock User',
+                age: 25,
+                gender: 'other',
+                location: 'New York',
+                bio: 'Mock user for comparison',
+                photos: [],
+                preferences: {
+                    minAge: 18,
+                    maxAge: 35,
+                    gender: ['male', 'female', 'other'],
+                    distance: 50
+                },
+                traits: {
+                    personality: ['outgoing', 'adventurous'],
+                    lifestyle: ['active', 'social'],
+                    values: ['honesty', 'loyalty']
+                },
+                goals: {
+                    relationshipType: 'long-term',
+                    timeline: 'within a year',
+                    dealbreakers: ['smoking', 'drugs']
+                }
+            }
+        };
+
+        const finalScore = calculateFinalScore({ profile }, mockUser2);
+        const archetypeScore = calculateArchetypeScore({ profile }, mockUser2);
+        const traitScore = calculateTraitScore({ profile }, mockUser2);
+        const goalScore = calculateGoalScore({ profile }, mockUser2);
+        const hasDealbreaker = hasDealbreakerConflict({ profile }, mockUser2);
+
+        res.json({
+            finalScore,
+            archetypeScore,
+            traitScore,
+            goalScore,
+            hasDealbreaker
+        });
+    } catch (error) {
+        console.error('Error calculating match score:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
 export default router; 
