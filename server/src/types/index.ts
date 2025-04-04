@@ -2,31 +2,23 @@ export interface UserProfile {
     name: string;
     age: number;
     gender: string;
+    location: string;
     bio: string;
     photos: string[];
     preferences: {
-        age_range: [number, number];
-        distance: number;
+        minAge: number;
+        maxAge: number;
         gender: string[];
+        distance: number;
     };
     traits: {
-        cognitive_style?: string;
-        communication?: string;
-        emotional_expression?: string;
-        values?: string[];
-        interests?: string[];
-        archetype?: string;
-        religion?: string;
-        children?: string;
-        monogamy?: string;
-        location?: string;
-        lifestyle?: string;
+        personality: string[];
+        lifestyle: string[];
+        values: string[];
     };
     goals: {
-        relationship_type: string;
+        relationshipType: string;
         timeline: string;
-        children: string;
-        location: string;
+        dealbreakers: string[];
     };
-    [key: string]: any; // Allow for additional properties
 } 
