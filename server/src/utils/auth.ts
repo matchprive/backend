@@ -1,33 +1,39 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { query } from '../config/database';
+import { AppDataSource } from '../config/database';
+import { User } from '../entities/User';
+
+const userRepository = AppDataSource.getRepository(User);
 
 const SALT_ROUNDS = 10;
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 const TOKEN_EXPIRY = '24h';
 
-export async function hashPassword(password: string): Promise<string> {
-  return bcrypt.hash(password, SALT_ROUNDS);
-}
+export const hashPassword = async (password: string): Promise<string> => {
+  const salt = await bcrypt.genSalt(10);
+  return bcrypt.hash(password, salt);
+};
 
-export async function comparePasswords(password: string, hash: string): Promise<boolean> {
-  return bcrypt.compare(password, hash);
-}
+export const comparePasswords = async (password: string, hashedPassword: string): Promise<boolean> => {
+  return bcrypt.compare(password, hashedPassword);
+};
 
-export function generateToken(userId: number): string {
-  return jwt.sign({ userId }, JWT_SECRET, { expiresIn: TOKEN_EXPIRY });
-}
+export const generateToken = (userId: string): string => {
+  return jwt.sign({ userId }, process.env.JWT_SECRET || 'your-secret-key', {
+    expiresIn: '24h',
+  });
+};
 
-export function verifyToken(token: string): { userId: number } | null {
-  try {
-    return jwt.verify(token, JWT_SECRET) as { userId: number };
-  } catch (error) {
-    return null;
-  }
-}
+export const verifyToken = (token: string): { userId: string } => {
+  return jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as { userId: string };
+};
+
+export const findUserByEmail = async (email: string): Promise<User | null> => {
+  return userRepository.findOne({ where: { email } });
+};
 
 export async function createSession(userId: number): Promise<string> {
-  const token = generateToken(userId);
+  const token = generateToken(userId.toString());
   const expiresAt = new Date();
   expiresAt.setHours(expiresAt.getHours() + 24); // 24 hours from now
 

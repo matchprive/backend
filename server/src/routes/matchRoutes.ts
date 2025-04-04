@@ -6,8 +6,13 @@ import {
   calculateArchetypeScore, 
   calculateFinalScore 
 } from '../utils/matchingAlgorithm';
+import { Router } from 'express';
+import { validateSession } from '../utils/sessionManagement';
+import { User } from '../entities/User';
+import { AppDataSource } from '../config/database';
 
 const router = express.Router();
+const userRepository = AppDataSource.getRepository(User);
 
 /**
  * Compare two users and calculate compatibility
@@ -65,6 +70,40 @@ router.get('/', async (req: Request, res: Response) => {
   } catch (error) {
     console.error('Error calculating match:', error);
     return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.get('/profile/:userId/report', validateSession, async (req, res) => {
+  try {
+    const targetUserId = req.params.userId;
+    const currentUser = req.user as User;
+
+    // Get target user
+    const targetUser = await userRepository.findOne({ where: { id: targetUserId } });
+    if (!targetUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Calculate compatibility score
+    const score = calculateFinalScore({ profile: targetUser.profile });
+
+    res.json({
+      score,
+      archetypeScore: {
+        traits: score,
+        preferences: score,
+        goals: score
+      },
+      hasDealbreaker: false,
+      compatibility: {
+        traits: score,
+        preferences: score,
+        goals: score
+      }
+    });
+  } catch (error) {
+    console.error('Error generating compatibility report:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
