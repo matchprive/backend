@@ -6,8 +6,8 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Install dependencies with cache mount
+RUN --mount=type=cache,target=/app/node_modules/.cache npm install
 
 # Copy source code
 COPY . .
@@ -25,8 +25,8 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/.env* ./
 
-# Install production dependencies only
-RUN npm install --production
+# Install production dependencies only with cache mount
+RUN --mount=type=cache,target=/app/node_modules/.cache npm install --production
 
 # Expose the port the app runs on
 EXPOSE 3000
