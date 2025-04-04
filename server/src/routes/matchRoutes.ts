@@ -148,7 +148,7 @@ router.post('/calculate-score', async (req, res) => {
             }
         };
 
-        const user1 = { profile };
+        const user1 = { profile: profile as UserProfile };
         const finalScore = calculateFinalScore(user1, mockUser2);
         const archetypeScore = calculateArchetypeScore(user1, mockUser2);
         const traitScore = calculateTraitScore(user1, mockUser2);

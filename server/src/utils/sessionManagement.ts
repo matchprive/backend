@@ -20,7 +20,7 @@ export const getSession = (sessionId: string): Session | null => {
     return sessions.get(sessionId) || null;
 };
 
-export async function createSession(userId: number): Promise<string> {
+export const createSession = async (userId: number): Promise<string> => {
     const token = generateToken(userId.toString());
     const expiresAt = new Date();
     expiresAt.setHours(expiresAt.getHours() + 24); // 24 hours from now
@@ -31,9 +31,9 @@ export async function createSession(userId: number): Promise<string> {
     );
 
     return token;
-}
+};
 
-export async function validateSession(token: string): Promise<number | null> {
+export const validateSession = async (token: string): Promise<number | null> => {
     const decoded = verifyToken(token);
     if (!decoded) return null;
 
@@ -44,28 +44,28 @@ export async function validateSession(token: string): Promise<number | null> {
 
     if (result.rows.length === 0) return null;
     return result.rows[0].user_id;
-}
+};
 
-export async function invalidateSession(token: string): Promise<void> {
+export const invalidateSession = async (token: string): Promise<void> => {
     await query(
         'DELETE FROM sessions WHERE token = $1',
         [token]
     );
-}
+};
 
-function generateToken(userId: string): string {
+const generateToken = (userId: string): string => {
     return jwt.sign({ userId }, process.env.JWT_SECRET || 'your-secret-key', {
         expiresIn: '24h',
     });
-}
+};
 
-function verifyToken(token: string): { userId: string } | null {
+const verifyToken = (token: string): { userId: string } | null => {
     try {
         return jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as { userId: string };
     } catch (error) {
         return null;
     }
-}
+};
 
 export const updateSessionProfile = (sessionId: string, profile: Partial<UserProfile>): boolean => {
     const session = sessions.get(sessionId);
