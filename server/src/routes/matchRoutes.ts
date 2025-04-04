@@ -85,7 +85,7 @@ router.get('/profile/:userId/report', validateSession, async (req, res) => {
     }
 
     // Calculate compatibility score
-    const score = calculateFinalScore({ profile: targetUser.profile });
+    const score = calculateFinalScore({ profile: targetUser.profile as any });
 
     res.json({
       score,
