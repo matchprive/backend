@@ -30,9 +30,9 @@ export const initializeDatabase = async () => {
 };
 
 // Raw SQL query function
-export const query = async (sql: string, params?: any[]) => {
+export async function query(sql: string, params?: any[]) {
     if (!AppDataSource.isInitialized) {
         await initializeDatabase();
     }
     return AppDataSource.query(sql, params);
-}; 
+} 

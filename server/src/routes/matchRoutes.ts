@@ -148,11 +148,12 @@ router.post('/calculate-score', async (req, res) => {
             }
         };
 
-        const finalScore = calculateFinalScore({ profile }, mockUser2);
-        const archetypeScore = calculateArchetypeScore({ profile }, mockUser2);
-        const traitScore = calculateTraitScore({ profile }, mockUser2);
-        const goalScore = calculateGoalScore({ profile }, mockUser2);
-        const hasDealbreaker = hasDealbreakerConflict({ profile }, mockUser2);
+        const user1 = { profile };
+        const finalScore = calculateFinalScore(user1, mockUser2);
+        const archetypeScore = calculateArchetypeScore(user1, mockUser2);
+        const traitScore = calculateTraitScore(user1, mockUser2);
+        const goalScore = calculateGoalScore(user1, mockUser2);
+        const hasDealbreaker = hasDealbreakerConflict(user1, mockUser2);
 
         res.json({
             finalScore,
